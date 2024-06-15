@@ -2,6 +2,14 @@ import subprocess
 import os
 
 
+def switchGitBranch(branch_name):
+    try:
+        subprocess.run(['git', 'checkout', branch_name], check=True)
+        print(f"Success switch to branch: {branch_name}")
+    except subprocess.CalledProcessError as e:
+        print(f"Fail switch to branch: {e}")
+
+
 command = ['git', 'clone', '--depth', '1', 'http://github.com/brendangregg/FlameGraph']
 subprocess.run(command)
 project_flgr = os.path.abspath('FlameGraph')
@@ -53,11 +61,7 @@ for test in tests_execut:
     subprocess.run(svg, shell=True)
 
 
-
-
-
-# Запустите CMake для сборки проекта
-#subprocess.run(['cmake', '--build', '.'])
+switchGitBranch('test_br')
 
 
 
