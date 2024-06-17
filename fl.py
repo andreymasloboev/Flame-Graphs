@@ -88,6 +88,9 @@ build_br_dir = os.getcwd() +'/build_branch'
 print(f"Build directory for branch: {build_br_dir}")
 os.makedirs(build_br_dir, exist_ok=True)
 
+se_linux_ruls = "echo -1 | sudo tee /proc/sys/kernel/perf_event_paranoid"
+subprocess.run(se_linux_ruls, shell=True)
+
 switchGitBranch('develop')
 
 #build develop
