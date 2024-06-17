@@ -1,5 +1,13 @@
 import subprocess
 import os
+import argparse
+
+parser = argparse.ArgumentParser(description='FlameGraph diff.')
+parser.add_argument('br', type=str, help='Branch for diff')
+args = parser.parse_args()
+diff_br = args.br
+
+print(f"Branch for diff: {diff_br}")
 
 command = ['git', 'clone', '--depth', '1', 'http://github.com/brendangregg/FlameGraph']
 subprocess.run(command)
@@ -80,10 +88,12 @@ build_br_dir = os.getcwd() +'/build_branch'
 print(f"Build directory for branch: {build_br_dir}")
 os.makedirs(build_br_dir, exist_ok=True)
 
+switchGitBranch('develop')
+
 #build develop
 buildGraph(build_dev_dir)
 
-switchGitBranch('exp/test')
+switchGitBranch(diff_br)
 
 #build branch
 buildGraph(build_br_dir)
